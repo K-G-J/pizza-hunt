@@ -10,9 +10,13 @@ const ReplySchema = new Schema(
     },
     replyBody: {
       type: String,
+      required: [true, 'You need to provide a reply body'],
+      trim: true,
     },
     writtenBy: {
       type: String,
+      required: [true, 'You need to provide an author'],
+      trim: true
     },
     createdAt: {
       type: Date,
@@ -31,9 +35,13 @@ const CommentSchema = new Schema(
   {
     writtenBy: {
       type: String,
+      required: [true, 'You need to provide an author'],
+      trim: true
     },
     commentBody: {
       type: String,
+      required: [true, 'You need to provide a comment body'],
+      trim: true
     },
     createdAt: {
       type: Date,
@@ -46,12 +54,12 @@ const CommentSchema = new Schema(
       virtuals: true,
       getters: true,
     },
-    id: false
+    id: false,
   },
 )
 
 CommentSchema.virtual('replyCount').get(function () {
-  return this.replies.length;
+  return this.replies.length
 })
 
 const Comment = model('Comment', CommentSchema)
